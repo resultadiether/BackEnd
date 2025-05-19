@@ -11,23 +11,19 @@ return new class extends Migration
      */
     public function up()
 {
-    Schema::create('books', function (Blueprint $table) {
-        $table->id();
-        $table->string('title');
-        $table->string('author');
-        $table->string('category');
-        $table->enum('status', ['Available', 'Borrowed'])->default('Available');
+    Schema::table('books', function (Blueprint $table) {
         $table->string('image')->nullable();
-        $table->timestamps();
     });
+}
 
 
-    }
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('books');
+        Schema::table('books', function (Blueprint $table) {
+            //
+        });
     }
 };
