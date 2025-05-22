@@ -4,8 +4,7 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
-    "start": "serve public/build"
-
+    "start": "php artisan serve"  
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.0.0",
