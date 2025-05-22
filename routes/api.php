@@ -12,11 +12,11 @@ Route::post('/books/{id}/borrow', [BookController::class, 'borrow']);
 Route::post('/books/{id}/return', [BookController::class, 'return']);
 
 Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/books', [BookController::class, 'index']);       // List all books
-    Route::get('/books/{id}', [BookController::class, 'show']);   // View single book
-    Route::post('/books', [BookController::class, 'store']);      // Create a book
-    Route::put('/books/{id}', [BookController::class, 'update']); // Update a book
-    Route::delete('/books/{id}', [BookController::class, 'destroy']); // Delete
+    Route::get('/books', [BookController::class, 'index']);       
+    Route::get('/books/{id}', [BookController::class, 'show']); 
+    Route::post('/books', [BookController::class, 'store']);     
+    Route::put('/books/{id}', [BookController::class, 'update']);
+    Route::delete('/books/{id}', [BookController::class, 'destroy']);
 });
 
 
