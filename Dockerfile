@@ -16,7 +16,8 @@ WORKDIR /var/www
 COPY . .
 
 # Install Composer dependencies
-RUN composer install
+RUN composer install --no-interaction --prefer-dist --verbose
+
 
 # Expose the port (e.g., 8000 for Laravel)
 EXPOSE 8000
