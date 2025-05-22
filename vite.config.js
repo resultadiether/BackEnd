@@ -10,9 +10,4 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
-    preview: {
-        host: true,
-        port: 4173,
-        allowedHosts: ['backend-6-9imj.onrender.com'], 
-    },
 });
