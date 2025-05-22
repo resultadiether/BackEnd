@@ -20,7 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role', // ✅ Add this line to allow mass assignment of role
+        'role',
     ];
 
     /**
