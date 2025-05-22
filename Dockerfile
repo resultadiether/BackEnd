@@ -1,31 +1,32 @@
-FROM php:8.2.12-cli
+# Use PHP 8.1 with FPM
+FROM php:8.2-fpm
 
-# Install system dependencies required for Laravel and Composer
+# Install system dependencies and PHP extensions needed by Laravel
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
+    libonig-dev \
     libzip-dev \
     zip \
-    && docker-php-ext-install zip \
-    && rm -rf /var/lib/apt/lists/*
+    && docker-php-ext-install pdo_mysql mbstring zip
 
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Install Composer globally
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set the working directory
+# Set working directory inside the container
 WORKDIR /var/www
 
-# Copy Composer files first to leverage Docker caching
-COPY composer.json composer.lock ./
-
-# Install Composer dependencies
-RUN composer install --no-interaction --prefer-dist --verbose
-
-# Now copy the rest of the application code
+# Copy all backend files into the container
 COPY . .
 
-# Expose Laravel development server port
-EXPOSE 8000
+# Allow Composer to run as root (optional, but needed in Docker)
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
-# Start Laravel app
-CMD ["php", "artisan", "serve", "--host=0.0.0.0"]
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
+
+# Expose port 9000 (default for php-fpm)
+EXPOSE 9000
+
+# Start php-fpm server
+CMD ["php-fpm"]
