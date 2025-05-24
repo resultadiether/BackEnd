@@ -7,7 +7,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://front-end-osly.vercel.app', 'http://localhost:3000'],
+    'allowed_origins' => ['https://front-end-9kkl.vercel.app', 'http://localhost:3000'],
 
     'allowed_headers' => ['*'],
 
