@@ -6,7 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BookController;
 
-// ✅ Public test route to confirm the backend is running
+
 Route::get('/ping', function () {
     return response()->json([
         'message' => 'Backend is working!',
