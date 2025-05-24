@@ -6,6 +6,13 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BookController;
 
+// ✅ Public test route to confirm the backend is running
+Route::get('/ping', function () {
+    return response()->json([
+        'message' => 'Backend is working!',
+        'status' => 'success'
+    ]);
+});
 
 Route::get('/books', [BookController::class, 'index']);
 Route::post('/books/{id}/borrow', [BookController::class, 'borrow']);
@@ -19,12 +26,9 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::delete('/books/{id}', [BookController::class, 'destroy']);
 });
 
-
-
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/admin/users', [UserController::class, 'index']);
 });
-
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
@@ -35,8 +39,3 @@ Route::group([
     Route::get('profile', [AuthController::class, 'profile']);
     Route::get('logout', [AuthController::class, 'logout']);
 });
-
-
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
