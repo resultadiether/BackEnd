@@ -12,13 +12,11 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*', 'login', 'register', 'logout', 'profile'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://front-end-nvxe.vercel.app', 'http://localhost:3000'],
-
-    'allowed_origins_patterns' => [],
+    'allowed_origins' => ['https://your-frontend-domain.com', 'http://localhost:3000'],
 
     'allowed_headers' => ['*'],
 
@@ -26,5 +24,5 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => true,
+    'supports_credentials' => false,
 ]; 

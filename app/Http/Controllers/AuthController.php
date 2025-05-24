@@ -3,24 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User; 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // ✅ Register API
+    // ✅ Register
     public function register(Request $request)
     {
         $data = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8',
             'role' => 'in:user,admin'
         ]);
 
         $data['password'] = Hash::make($data['password']);
-        $data['role'] = $data['role'] ?? 'user'; 
+        $data['role'] = $data['role'] ?? 'user';
 
         $user = User::create($data);
 
@@ -31,7 +31,7 @@ class AuthController extends Controller
         ], 201);
     }
 
-    // ✅ Login API
+    // ✅ Login
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -57,7 +57,7 @@ class AuthController extends Controller
         ]);
     }
 
-    // ✅ Profile API
+    // ✅ Profile
     public function profile()
     {
         $user = auth()->user();
@@ -69,7 +69,7 @@ class AuthController extends Controller
         ]);
     }
 
-    // ✅ Logout API
+    // ✅ Logout
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
