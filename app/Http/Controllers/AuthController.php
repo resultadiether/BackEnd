@@ -3,65 +3,80 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\User; 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    // ✅ Register API
     public function register(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-        
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+        $data = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+            'role' => 'in:user,admin'
         ]);
 
-        $token =$user->createToken('auth_token')->plainTextToken;
+        $data['password'] = Hash::make($data['password']);
+        $data['role'] = $data['role'] ?? 'user'; 
+
+        $user = User::create($data);
 
         return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
+            'status' => true,
+            'message' => 'User created successfully',
             'user' => $user,
-        ]);
+        ], 201);
     }
 
+    // ✅ Login API
     public function login(Request $request)
     {
-        $request->validate([
+        $credentials = $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (!Auth::attempt($credentials)) {
             return response()->json([
-                'message' => 'Invalid email or password'
+                'status' => false,
+                'message' => 'Invalid credentials'
             ], 401);
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $user = Auth::user();
+        $token = $user->createToken('api_token')->plainTextToken;
 
         return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
+            'status' => true,
+            'message' => 'Login successful',
+            'token' => $token,
             'user' => $user,
         ]);
     }
 
+    // ✅ Profile API
+    public function profile()
+    {
+        $user = auth()->user();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'User profile',
+            'user' => $user,
+        ]);
+    }
+
+    // ✅ Logout API
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'message' => 'Logged out Succesfully'
+            'status' => true,
+            'message' => 'User logged out successfully',
         ]);
     }
 }
