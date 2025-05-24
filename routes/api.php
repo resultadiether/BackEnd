@@ -38,4 +38,10 @@ Route::group([
 ], function () {
     Route::get('profile', [AuthController::class, 'profile']);
     Route::get('logout', [AuthController::class, 'logout']);
+    
+    // ✅ Route to return authenticated user
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
 });
