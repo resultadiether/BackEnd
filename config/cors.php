@@ -7,6 +7,7 @@ return [
 
     'allowed_origins' => [
         'https://front-end-nvxe.vercel.app',
+        'https://front-end-nvxe-la6zu7pgq-diether-resultas-projects.vercel.app',
     ],
 
     'allowed_origins_patterns' => [],
