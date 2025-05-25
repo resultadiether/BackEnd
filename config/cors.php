@@ -20,7 +20,7 @@ return [
 
     'allowed_origins' => [
         'https://front-end-nvxe.vercel.app',
-        'https://front-end-nvxe-j2cp4pzm4-diether-resultas-projects.vercel.app' // also add this since it's in your screenshot
+        'front-end-nvxe-g09zy4uq9-diether-resultas-projects.vercel.app
     ],
 
     'allowed_origins_patterns' => [],
