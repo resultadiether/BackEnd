@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\JsonResponse;
+
+
 
 class AuthController extends Controller
 {
@@ -20,7 +23,7 @@ class AuthController extends Controller
         ]);
 
         $data['password'] = Hash::make($data['password']);
-        $data['role'] = $data['role'] ?? 'user';
+        $data['role'] ??= 'user';
 
         $user = User::create($data);
 
@@ -31,52 +34,51 @@ class AuthController extends Controller
         ], 201);
     }
 
-    // ✅ Login
-    public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+   // ✅ 1. Login Method
+public function login(Request $request): JsonResponse
+{
+    $data = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
 
-        if (!Auth::attempt($credentials)) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Invalid credentials'
-            ], 401);
-        }
-
-        $user = Auth::user();
-        $token = $user->createToken('api_token')->plainTextToken;
-
+    if (!Auth::attempt($data)) {
         return response()->json([
-            'status' => true,
-            'message' => 'Login successful',
-            'token' => $token,
-            'user' => $user,
-        ]);
+            'status' => false,
+            'message' => 'Invalid login credentials',
+        ], 401);
     }
 
-    // ✅ Profile
-    public function profile()
-    {
-        $user = auth()->user();
+    $user = User::where('email', $request->email)->first();
+    $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
-            'status' => true,
-            'message' => 'User profile',
-            'user' => $user,
-        ]);
-    }
+    return response()->json([
+        'token' => $token,
+        'user' => $user,
+    ]);
+} // 👈 END of login
 
-    // ✅ Logout
-    public function logout(Request $request)
-    {
-        $request->user()->currentAccessToken()->delete();
+// ✅ 2. Profile Method
+public function profile(): JsonResponse
+{
+    $user = Auth::user();
 
-        return response()->json([
-            'status' => true,
-            'message' => 'User logged out successfully',
-        ]);
-    }
-}
+    return response()->json([
+        'status' => true,
+        'message' => 'User profile',
+        'user' => $user,
+    ]);
+} // 👈 END of profile
+
+// ✅ 3. Logout Method
+public function logout(Request $request): JsonResponse
+{
+    $request->user()->currentAccessToken()->delete();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'User logged out successfully',
+    ]);
+} // 👈 END of logout
+
+} // 👈 END of AuthController

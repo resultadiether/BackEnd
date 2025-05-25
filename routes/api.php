@@ -1,10 +1,15 @@
 <?php
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BookController;
+use Illuminate\Support\Facades\Hash;
+    
+use Illuminate\Http\JsonResponse;
+Route::post('/register', [AuthController::class, 'register']);use App\Models\User;
 
 Route::get('/ping', function () {
     return response()->json([
