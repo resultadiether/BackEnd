@@ -20,7 +20,7 @@ return [
 
     'allowed_origins' => [
         'https://front-end-nvxe.vercel.app',
-        'front-end-nvxe-g09zy4uq9-diether-resultas-projects.vercel.app,
+        'front-end-nvxe-g09zy4uq9-diether-resultas-projects.vercel.app',
     ],
 
     'allowed_origins_patterns' => [],
