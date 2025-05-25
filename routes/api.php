@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
     
 use Illuminate\Http\JsonResponse;
 Route::post('/register', [AuthController::class, 'register']);use App\Models\User;
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/ping', function () {
     return response()->json([
