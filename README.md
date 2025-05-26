@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -62,4 +62,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 =======
 # BackEnd
->>>>>>> af0e8aab1334541f34e93843593f010842155950
+
+## GOOGLE DRIVE LINK
+
+API Documentation by: Dustine Consina and Eralyn Forte (https://drive.google.com/drive/folders/101gnib8KHyJFxvfgjIHCIEkQQvPjb5NF?usp=drive_link)
