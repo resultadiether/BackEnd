@@ -56,7 +56,7 @@ public function login(Request $request): JsonResponse
         'token' => $token,
         'user' => $user,
     ]);
-} // 👈 END of login
+}
 
 // ✅ 2. Profile Method
 public function profile(): JsonResponse
@@ -68,7 +68,7 @@ public function profile(): JsonResponse
         'message' => 'User profile',
         'user' => $user,
     ]);
-} // 👈 END of profile
+} 
 
 // ✅ 3. Logout Method
 public function logout(Request $request): JsonResponse
@@ -79,6 +79,6 @@ public function logout(Request $request): JsonResponse
         'status' => true,
         'message' => 'User logged out successfully',
     ]);
-} // 👈 END of logout
+} 
 
-} // 👈 END of AuthController
+} 
